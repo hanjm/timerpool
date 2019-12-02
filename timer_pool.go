@@ -5,15 +5,14 @@ import (
 	"time"
 )
 
-var _timerWithAfterFuncPool = sync.Pool{
-}
+var _timerWithAfterFuncPool = sync.Pool{}
 
 type timerWithAfterFunc struct {
 	t *time.Timer
 	f func()
 }
 
-// GetTimer get a timer from pool or create from time.AfterFunc
+// GetTimerWithAfterFunc get a timer from pool or create from time.AfterFunc
 func GetTimerWithAfterFunc(d time.Duration, f func()) *timerWithAfterFunc {
 	//defer func() func() {
 	//	start := time.Now()
@@ -34,7 +33,7 @@ func GetTimerWithAfterFunc(d time.Duration, f func()) *timerWithAfterFunc {
 	return tf
 }
 
-// PutTimer stop a timer and return into pool
+// PutTimerWithAfterFunc stop a timer and return into pool
 func PutTimerWithAfterFunc(t *timerWithAfterFunc) {
 	//defer func() func() {
 	//	start := time.Now()
@@ -47,8 +46,7 @@ func PutTimerWithAfterFunc(t *timerWithAfterFunc) {
 	_timerWithAfterFuncPool.Put(t)
 }
 
-var _timerPool = sync.Pool{
-}
+var _timerPool = sync.Pool{}
 
 // GetTimer get a timer from pool or create from time.NewTimer
 func GetTimer(d time.Duration) *time.Timer {
